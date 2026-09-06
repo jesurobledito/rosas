@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Ti 🌹</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #1a050b 0%, #2d0b16 50%, #400d1e 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+    }
+
+    /* Mensaje central */
+    .card {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.07);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 182, 193, 0.2);
+      padding: 2.5rem 2rem;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      max-width: 90%;
+      width: 380px;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .card h1 {
+      color: #ffb7c5;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 0 10px rgba(255, 183, 197, 0.5);
+    }
+
+    .card p {
+      color: #f3d5dc;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    /* Rosas floreciendo en fondo */
+    .rose {
+      position: absolute;
+      width: 35px;
+      height: 35px;
+      background: radial-gradient(circle, #ff69b4 0%, #ff1493 60%, #c71585 100%);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg) scale(0);
+      animation: bloom 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.27) forwards;
+      pointer-events: none;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    }
+
+    .rose::before,
+    .rose::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: inherit;
+      border-radius: inherit;
+    }
+
+    .rose::before {
+      transform: rotate(30deg) scale(0.8);
+    }
+
+    .rose::after {
+      transform: rotate(60deg) scale(0.6);
+    }
+
+    @keyframes bloom {
+      0% {
+        transform: rotate(-45deg) scale(0);
+        opacity: 0;
+      }
+      100% {
+        transform: rotate(-45deg) scale(1);
+        opacity: 0.85;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Un Campo de Rosas 🌹</h1>
+    <p>Haz clic o toca la pantalla para ver florecer más rosas.</p>
+  </div>
+
+  <script>
+    // Generar rosas automáticas al cargar
+    function createRose(x, y) {
+      const rose = document.createElement('div');
+      rose.className = 'rose';
+      
+      // Tamaño y posición variada
+      const size = Math.random() * 20 + 25;
+      rose.style.width = `${size}px`;
+      rose.style.height = `${size}px`;
+      rose.style.left = `${x - size / 2}px`;
+      rose.style.top = `${y - size / 2}px`;
+
+      document.body.appendChild(rose);
+    }
+
+    // Llenar la pantalla con algunas rosas iniciales
+    for (let i = 0; i < 40; i++) {
+      const randomX = Math.random() * window.innerWidth;
+      const randomY = Math.random() * window.innerHeight;
+      setTimeout(() => createRose(randomX, randomY), i * 50);
+    }
+
+    // Crear rosas al tocar o hacer clic
+    window.addEventListener('click', (e) => {
+      createRose(e.clientX, e.clientY);
+    });
+
+    window.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      createRose(touch.clientX, touch.clientY);
+    });
+  </script>
+</body>
+</html>
